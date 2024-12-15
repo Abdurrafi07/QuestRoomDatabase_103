@@ -2,6 +2,7 @@ package com.example.p7mvvmdb.ui.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.p7mvvmdb.data.entity.Mahasiswa
 import com.example.p7mvvmdb.repository.RepositoryMhs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
@@ -43,3 +44,10 @@ class HomeMhsViewModel(
             )
         )
 }
+
+data class HomeUiState(
+    val listMhs: List<Mahasiswa> = listOf(),
+    val isLoading: Boolean = false,
+    val isError: Boolean = false,
+    val errorMessage: String = ""
+)
