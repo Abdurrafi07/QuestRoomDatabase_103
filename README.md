@@ -24,4 +24,7 @@ Halaman Edit Mahasiswa
 ![image](https://github.com/user-attachments/assets/91bcda52-50b7-4fa9-b744-d75f924e4e5c)
 Halaman Detail Setelah Edit
 ![image](https://github.com/user-attachments/assets/483f7e5f-2950-4214-80a9-17d539eedbd5)
+Halaman Home Setelah Edit Data
+![image](https://github.com/user-attachments/assets/14b00893-ecec-40b5-b323-ffad86dcfddb)
+
 
