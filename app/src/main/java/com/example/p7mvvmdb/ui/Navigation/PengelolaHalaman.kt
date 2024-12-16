@@ -21,7 +21,7 @@ fun PengelolaHalaman(
 ){
     NavHost(
         navController = navController,
-        startDestination = DestinasiInsert.route
+        startDestination = DestinasiHome.route
     ) {
         composable(
             route = DestinasiHome.route
@@ -71,7 +71,7 @@ fun PengelolaHalaman(
             }
         }
         composable(
-            DestinasiDetail.routesWithArg,
+            DestinasiUpdate.routesWithArg,
             arguments = listOf(
                 navArgument(DestinasiUpdate.NIM){
                     type = NavType.StringType

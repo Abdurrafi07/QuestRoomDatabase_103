@@ -42,75 +42,41 @@ import com.example.p7mvvmdb.ui.ViewModel.PenyediaViewModel
 import com.example.p7mvvmdb.ui.customWidget.TopAppBar
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardMhs(
-    mhs: Mahasiswa,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+fun HomeMhsView(
+    viewModel: HomeMhsViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    onAddMhs : ()-> Unit = { },
+    onDetailClick : (String) -> Unit = { },
+    modifier: Modifier = Modifier
 ){
-    Card(
-        onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Column(modifier = Modifier.padding(8.dp))
-        {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(imageVector = Icons.Filled.Person, contentDescription = "")
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = mhs.nama,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-            }
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(imageVector = Icons.Filled.DateRange, contentDescription = "")
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = mhs.nim,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(imageVector = Icons.Filled.Home, contentDescription = "")
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = mhs.kelas,
-                    fontWeight = FontWeight.Bold
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                judul = "Daftar Mahasiswa",
+                showBackButton = false,
+                onBack = { },
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onAddMhs,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(16.dp)
+            ){
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Tambah Mahasiswa",
                 )
             }
         }
-    }
-}
-
-@Composable
-fun ListMahasiswa(
-    listMhs: List<Mahasiswa>,
-    modifier: Modifier = Modifier,
-    onClick: (String) -> Unit = { }
-){
-    LazyColumn(modifier = Modifier) {
-        items(
-            items = listMhs,
-            itemContent = {mhs ->
-                CardMhs(
-                    mhs = mhs,
-                    onClick = {onClick(mhs.nim)}
-                )
-            }
+    ){ innerPadding->
+        val homeUiState by viewModel.HomeUiState.collectAsState()
+        BodyHomeMhsView(
+            homeUiState = homeUiState,
+            onClick = {
+                onDetailClick(it)
+            },
+            modifier = Modifier.padding(innerPadding)
         )
     }
 }
@@ -167,41 +133,74 @@ fun BodyHomeMhsView(
 }
 
 @Composable
-fun HomeMhsView(
-    viewModel: HomeMhsViewModel = viewModel(factory = PenyediaViewModel.Factory),
-    onAddMhs : ()-> Unit = { },
-    onDetailClick : (String) -> Unit = { },
-    modifier: Modifier = Modifier
+fun ListMahasiswa(
+    listMhs: List<Mahasiswa>,
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit = { }
 ){
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                judul = "Tambah Mahasiswa",
-                showBackButton = false,
-                onBack = { },
-                modifier = modifier
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddMhs,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(16.dp)
-            ){
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Tambah Mahasiswa",
+    LazyColumn(modifier = Modifier) {
+        items(
+            items = listMhs,
+            itemContent = {mhs ->
+                CardMhs(
+                    mhs = mhs,
+                    onClick = {onClick(mhs.nim)}
+                )
+            }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CardMhs(
+    mhs: Mahasiswa,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+){
+    Card(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Column(modifier = Modifier.padding(8.dp))
+        {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Filled.Person, contentDescription = "")
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = mhs.nama,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Filled.DateRange, contentDescription = "")
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = mhs.nim,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Filled.Home, contentDescription = "")
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = mhs.kelas,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
-    ){ innerPadding->
-        val homeUiState by viewModel.HomeUiState.collectAsState()
-        BodyHomeMhsView(
-            homeUiState = homeUiState,
-            onClick = {
-                onDetailClick(it)
-            },
-            modifier = Modifier.padding(innerPadding)
-        )
     }
 }
